@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proposta Comercial | Raiz Vendas e Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-a" aria-hidden="true"></div>
+    <div class="ambient ambient-b" aria-hidden="true"></div>
+    <button
+      class="admin-hotspot no-print"
+      id="panelHotspot"
+      type="button"
+      aria-label="Abrir painel interno"
+    ></button>
+
+    <div class="panel-backdrop no-print" id="panelBackdrop" hidden></div>
+
+    <aside
+      class="control-panel no-print"
+      id="controlPanel"
+      aria-hidden="true"
+      hidden
+    >
+      <div class="panel-header">
+        <div>
+          <p class="panel-eyebrow">Painel Interno</p>
+          <h2>Editar cliente, valores e dados comerciais</h2>
+        </div>
+        <button
+          class="panel-close"
+          id="panelClose"
+          type="button"
+          aria-label="Fechar painel"
+        >
+          Fechar
+        </button>
+      </div>
+
+      <p class="panel-hint">
+        Atalho discreto: <strong>Ctrl/Cmd + Shift + E</strong>
+      </p>
+
+      <form class="panel-form" id="proposalForm">
+        <section class="panel-group">
+          <h3>Cliente e datas</h3>
+          <label>
+            Nome do cliente
+            <input type="text" data-input-path="clientName" />
+          </label>
+          <label>
+            Empresa do cliente
+            <input type="text" data-input-path="companyName" />
+          </label>
+          <label>
+            Data de emissão
+            <input type="date" data-input-path="dates.issueDate" />
+          </label>
+          <label>
+            Janela da implantação
+            <input type="text" data-input-path="dates.startWindow" />
+          </label>
+          <label>
+            Validade em dias
+            <input
+              type="number"
+              min="1"
+              step="1"
+              data-input-path="dates.validityDays"
+            />
+          </label>
+        </section>
+
+        <section class="panel-group">
+          <h3>Valores principais</h3>
+          <label>
+            Implantação
+            <input
+              type="number"
+              min="0"
+              step="100"
+              data-input-path="values.implementationFee"
+            />
+          </label>
+          <label>
+            Recorrência mensal
+            <input
+              type="number"
+              min="0"
+              step="100"
+              data-input-path="values.monthlyFee"
+            />
+          </label>
+        </section>
+
+        <section class="panel-group">
+          <h3>Ancoragem avulsa</h3>
+          <label>
+            Landing page para vendas
+            <input
+              type="number"
+              min="0"
+              step="100"
+              data-input-path="anchorPrices.landingPage"
+            />
+          </label>
+          <label>
+            Gerenciamento de campanhas
+            <input
+              type="number"
+              min="0"
+              step="100"
+              data-input-path="anchorPrices.metaCampaigns"
+            />
+          </label>
+          <label>
+            Atendimento comercial
+            <input
+              type="number"
+              min="0"
+              step="100"
+              data-input-path="anchorPrices.whatsappAutomation"
+            />
+          </label>
+          <label>
+            Criativos em imagem (pacote inicial)
+            <input
+              type="number"
+              min="0"
+              step="100"
+              data-input-path="anchorPrices.imageCreatives"
+            />
+          </label>
+          <label>
+            Criativos em video (pacote inicial)
+            <input
+              type="number"
+              min="0"
+              step="100"
+              data-input-path="anchorPrices.videoCreatives"
+            />
+          </label>
+        </section>
+
+        <section class="panel-group">
+          <h3>Contato e condições</h3>
+          <label>
+            WhatsApp com DDI + DDD
+            <input type="text" data-input-path="whatsappNumber" />
+          </label>
+          <label>
+            Observações de pagamento
+            <textarea rows="4" data-input-path="paymentNotes"></textarea>
+          </label>
+          <label>
+            Aviso sobre verba de anúncios
+            <textarea rows="3" data-input-path="adBudgetNote"></textarea>
+          </label>
+        </section>
+
+        <section class="panel-group">
+          <h3>Autoridade</h3>
+          <label>
+            Experiência
+            <input type="text" data-input-path="authorityMetrics.years" />
+          </label>
+          <label>
+            Clientes atendidos
+            <input type="text" data-input-path="authorityMetrics.clients" />
+          </label>
+          <label>
+            Receita gerada
+            <input type="text" data-input-path="authorityMetrics.revenue" />
+          </label>
+          <label>
+            Mídia gerenciada
+            <input type="text" data-input-path="authorityMetrics.adSpend" />
+          </label>
+        </section>
+      </form>
+
+      <div class="panel-actions">
+        <button class="ghost-button" id="resetButton" type="button">
+          Restaurar padrão
+        </button>
+        <button class="primary-button" id="closeButton" type="button">
+          Voltar para a proposta
+        </button>
+      </div>
+    </aside>
+
+    <main class="proposal-shell">
+      <section class="section hero">
+        <div class="hero-copy">
+          <div class="brand-lockup">
+            <div>
+              <p class="eyebrow">Raiz Vendas e Marketing</p>
+              <p class="brand-subtitle">Assessoria de resultado comercial</p>
+            </div>
+          </div>
+
+          <div class="hero-meta">
+            <span class="meta-chip"
+              >Proposta para <strong data-bind="clientName"></strong
+            ></span>
+            <span class="meta-chip" data-bind="companyName"></span>
+            <span class="meta-chip"
+              >Emitida em <strong data-date="dates.issueDate"></strong
+            ></span>
+          </div>
+
+          <div class="hero-intro">
+            <p class="eyebrow">Proposta comercial</p>
+            <h1>
+              Estrutura comercial para acelerar suas
+              <span>vendas.</span>
+            </h1>
+          </div>
+
+          <p class="hero-lead">
+            A proposta organiza oferta, landing page, tráfego pago,
+            atendimento e criativos para tirar a operação do papel com mais
+            velocidade, mais clareza comercial e menos ruído na execução.
+          </p>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="orbit orbit-a"></div>
+          <div class="orbit orbit-b"></div>
+          <div class="orbit orbit-c"></div>
+          <div class="hero-visual-grid">
+            <article class="signal-card signal-right">
+              <span>Ads</span>
+              <strong>Campanhas em 3 dias úteis</strong>
+            </article>
+            <article class="signal-card signal-left">
+              <span>LP + IMG</span>
+              <strong>Landing e criativos em até 7 dias</strong>
+            </article>
+            <article class="signal-card signal-wide">
+              <span>Operação integrada</span>
+              <strong>Tráfego, página, atendimento e estrutura comercial alinhados</strong>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section authority">
+        <div class="section-heading">
+          <p class="eyebrow">Autoridade</p>
+          <h2>Números que sustentam a entrega.</h2>
+        </div>
+        <div class="metric-grid">
+          <article class="metric-card">
+            <p class="metric-value" data-bind="authorityMetrics.years"></p>
+            <p class="metric-label">de experiência prática em marketing e vendas</p>
+          </article>
+          <article class="metric-card">
+            <p class="metric-value" data-bind="authorityMetrics.clients"></p>
+            <p class="metric-label">operações atendidas em diferentes estágios</p>
+          </article>
+          <article class="metric-card">
+            <p class="metric-value" data-bind="authorityMetrics.revenue"></p>
+            <p class="metric-label">em receita gerada com estratégia comercial</p>
+          </article>
+          <article class="metric-card">
+            <p class="metric-value" data-bind="authorityMetrics.adSpend"></p>
+            <p class="metric-label">em anúncios administrados com foco em ROI</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section vision">
+        <div class="section-heading">
+          <p class="eyebrow">Visão da assessoria</p>
+          <h2>O foco não é só aparecer. O foco é vender com direção.</h2>
+        </div>
+        <div class="vision-grid">
+          <div class="vision-copy">
+            <p>
+              A assessoria de resultado da Raiz Vendas e Marketing organiza a
+              jornada inteira: captação, posicionamento, página, atendimento,
+              tráfego e acompanhamento comercial.
+            </p>
+            <p>
+              Em vez de contratar peças soltas e desconectadas, a proposta
+              concentra a estrutura principal para acelerar a implantação e
+              colocar a operação no ar com leitura de performance desde o início.
+            </p>
+          </div>
+          <div class="value-stack">
+            <article>
+              <h3>Oferta mais clara</h3>
+              <p>Posicionamento e comunicação para melhorar percepção de valor.</p>
+            </article>
+            <article>
+              <h3>Captação com ritmo</h3>
+              <p>Campanhas estruturadas para trazer demanda e começar a validar rápido.</p>
+            </article>
+            <article>
+              <h3>Atendimento com resposta</h3>
+              <p>Agente e fluxo comercial para não perder lead por lentidão operacional.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section deliverables">
+        <div class="section-heading">
+          <p class="eyebrow">Entregas inclusas</p>
+          <h2>O que entra na implantação da assessoria.</h2>
+        </div>
+        <div class="card-grid three-columns">
+          <article class="info-card">
+            <h3>Estratégia comercial</h3>
+            <p>
+              Ajuste de narrativa, promessa, oferta e estrutura de conversão
+              para abrir a operação com mais clareza.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Landing page para vendas</h3>
+            <p>
+              Página enxuta e objetiva para apresentar a proposta, reduzir
+              objeções e captar com foco em conversão.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Gerenciamento de campanhas</h3>
+            <p>
+              Estrutura inicial de tráfego pago para colocar as campanhas no ar
+              com direção comercial e leitura inicial.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Atendimento automatizado</h3>
+            <p>
+              Primeira versão do agente e do fluxo comercial para qualificar e
+              responder com mais velocidade.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Criativos em imagem</h3>
+            <p>
+              Pacote inicial de peças para ativação rápida da campanha e
+              sustentação da comunicação.
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Criativos em video</h3>
+            <p>
+              Direção de roteiro, gravação e entrega inicial para reforçar
+              atenção e percepção de autoridade.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section timeline">
+        <div class="section-heading">
+          <p class="eyebrow">Janela da implantação</p>
+          <h2>Primeiras entregas em horas. Estrutura integrada em até 15 dias.</h2>
+        </div>
+        <div class="timeline-board">
+          <div class="timeline-column">
+            <div class="timeline-marker">72h</div>
+            <article class="roadmap-card">
+              <span class="roadmap-icon">IMG</span>
+              <h3>Criativos em imagem</h3>
+              <p>Pacote inicial pronto para acelerar a ativação.</p>
+            </article>
+          </div>
+
+          <div class="timeline-column">
+            <div class="timeline-marker">3 a 7 dias úteis</div>
+            <article class="roadmap-card">
+              <span class="roadmap-icon">ADS</span>
+              <h3>Campanhas no ar</h3>
+              <p>Tráfego pago estruturado em até 3 dias úteis.</p>
+            </article>
+            <article class="roadmap-card">
+              <span class="roadmap-icon">LP</span>
+              <h3>Landing page</h3>
+              <p>Primeira versão entregue em até 7 dias úteis.</p>
+            </article>
+            <article class="roadmap-card">
+              <span class="roadmap-icon">VID</span>
+              <h3>Vídeo</h3>
+              <p>Roteiro, gravação e entrega inicial em até 7 dias.</p>
+            </article>
+          </div>
+
+          <div class="timeline-column">
+            <div class="timeline-marker">7 a 15 dias</div>
+            <article class="roadmap-card">
+              <span class="roadmap-icon">BOT</span>
+              <h3>Agente de atendimento</h3>
+              <p>Primeira versão funcional entre 7 e 15 dias.</p>
+            </article>
+            <article class="roadmap-card highlight">
+              <span class="roadmap-icon">GO</span>
+              <h3>Entrega final integrada</h3>
+              <p>Operação consolidada em até 15 dias.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section anchor-pricing">
+        <div class="section-heading">
+          <p class="eyebrow">Referência avulsa</p>
+          <h2>Quanto essa estrutura custaria se fosse contratada em peças separadas.</h2>
+        </div>
+        <div class="card-grid anchor-grid">
+          <article class="price-card">
+            <p class="label">Landing page para vendas</p>
+            <strong data-money="anchorPrices.landingPage"></strong>
+            <span class="price-note">estrutura inicial da página de conversão</span>
+          </article>
+          <article class="price-card">
+            <p class="label">Gerenciamento de campanhas</p>
+            <strong data-money="anchorPrices.metaCampaigns"></strong>
+            <span class="price-note">subida, organização e leitura inicial</span>
+          </article>
+          <article class="price-card">
+            <p class="label">Atendimento comercial</p>
+            <strong data-money="anchorPrices.whatsappAutomation"></strong>
+            <span class="price-note">estrutura inicial do fluxo automatizado</span>
+          </article>
+          <article class="price-card">
+            <p class="label">Criativos em imagem</p>
+            <strong data-money="anchorPrices.imageCreatives"></strong>
+            <span class="price-note">R$ 30 cada | pacote inicial de 20</span>
+          </article>
+          <article class="price-card">
+            <p class="label">Criativos em video</p>
+            <strong data-money="anchorPrices.videoCreatives"></strong>
+            <span class="price-note">R$ 250 cada | pacote inicial de 10</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section comparison">
+        <div class="section-heading">
+          <p class="eyebrow">Investimento da implantação</p>
+          <h2>Primeiro a referência. Depois o valor real desta proposta.</h2>
+        </div>
+
+        <div class="comparison-grid clarity-grid">
+          <article class="comparison-card muted reference-card">
+            <p class="label">Referência contratando separado</p>
+            <strong data-money-computed="anchorTotal"></strong>
+            <p>
+              Esse valor é apenas a soma avulsa das peças principais, sem o
+              ganho de composição da assessoria.
+            </p>
+            <div class="breakdown-list">
+              <div class="breakdown-row">
+                <span>Landing page</span>
+                <span data-money="anchorPrices.landingPage"></span>
+              </div>
+              <div class="breakdown-row">
+                <span>Gerenciamento de campanhas</span>
+                <span data-money="anchorPrices.metaCampaigns"></span>
+              </div>
+              <div class="breakdown-row">
+                <span>Atendimento comercial</span>
+                <span data-money="anchorPrices.whatsappAutomation"></span>
+              </div>
+              <div class="breakdown-row">
+                <span>Criativos em imagem</span>
+                <span data-money="anchorPrices.imageCreatives"></span>
+              </div>
+              <div class="breakdown-row">
+                <span>Criativos em video</span>
+                <span data-money="anchorPrices.videoCreatives"></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="comparison-card featured proposal-card">
+            <p class="label">Preço atual desta proposta</p>
+            <h3>Implantação completa</h3>
+            <strong data-money="values.implementationFee"></strong>
+            <p>
+              Este é o valor efetivo da implantação para colocar a operação no
+              ar com a estrutura principal integrada.
+            </p>
+            <div class="clarity-highlight">
+              <span>Diferença para a referência avulsa</span>
+              <strong data-money-computed="implementationGap"></strong>
+            </div>
+          </article>
+        </div>
+
+        <div class="pricing-summary">
+          <p>
+            Em resumo: contratar tudo separado gera uma referência de
+            <strong data-money-computed="anchorTotal"></strong>. Nesta proposta,
+            o valor real da implantação é
+            <strong data-money="values.implementationFee"></strong>.
+          </p>
+        </div>
+      </section>
+
+      <section class="section recurring">
+        <div class="section-heading">
+          <p class="eyebrow">Manutenção mensal</p>
+          <h2>O valor recorrente entra depois da implantação e cuida do que já está rodando.</h2>
+        </div>
+        <div class="recurring-grid">
+          <article class="info-card large recurring-main">
+            <p class="label">Recorrência a partir do 2º mês</p>
+            <p class="recurring-price">
+              <span data-money="values.monthlyFee"></span><small>/mês</small>
+            </p>
+            <p>
+              Manutenção, infraestrutura, otimização, relatórios e suporte para
+              manter a operação ativa e evoluindo com consistência.
+            </p>
+          </article>
+
+          <div class="recurring-list">
+            <article class="mini-card">
+              <h3>O que está incluso</h3>
+              <ul class="scope-list">
+                <li>Manutenção e infraestrutura do agente de atendimento automático.</li>
+                <li>Otimização e relatório das campanhas de tráfego pago.</li>
+                <li>Infraestrutura da landing page.</li>
+                <li>Suporte completo da operação ativa.</li>
+              </ul>
+            </article>
+            <article class="mini-card">
+              <h3>Como a manutenção funciona</h3>
+              <ul class="scope-list">
+                <li>O foco principal é cuidar do que já está ativo e melhorar de forma contínua e gradual.</li>
+                <li>Ajustes fora do escopo no agente são cobrados à parte.</li>
+                <li>Mudanças bruscas de estratégia ou campanha precisam ser planejadas antes da execução.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section conditions">
+        <div class="section-heading">
+          <p class="eyebrow">Condições comerciais</p>
+          <h2>Termos claros, sem ruído e sem pegadinha.</h2>
+        </div>
+        <div class="card-grid four-columns">
+          <article class="condition-card">
+            <h3>Sem fidelidade</h3>
+            <p>Continuidade por resultado, não por obrigação contratual.</p>
+          </article>
+          <article class="condition-card">
+            <h3>Aviso prévio de 30 dias</h3>
+            <p>Encerramento com previsibilidade operacional para ambos os lados.</p>
+          </article>
+          <article class="condition-card">
+            <h3>Sem multa por rescisão</h3>
+            <p>Saída simples, respeitando apenas o aviso combinado.</p>
+          </article>
+          <article class="condition-card alert-card">
+            <h3>Verba de anúncios separada</h3>
+            <p data-bind="adBudgetNote"></p>
+          </article>
+        </div>
+
+        <div class="payment-note">
+          <p class="label">Observações de pagamento</p>
+          <p data-bind="paymentNotes"></p>
+        </div>
+      </section>
+
+      <section class="section validity">
+        <div class="section-heading">
+          <p class="eyebrow">Validade</p>
+          <h2>Condição comercial protegida por tempo limitado.</h2>
+        </div>
+        <div class="validity-card">
+          <p>
+            Esta proposta é válida por
+            <strong data-bind="dates.validityDays"></strong> dias corridos,
+            até <strong data-computed="validUntil"></strong>.
+          </p>
+          <p>
+            Janela sugerida da implantação:
+            <strong data-bind="dates.startWindow"></strong>.
+          </p>
+        </div>
+      </section>
+
+      <section class="section final-cta">
+        <div class="section-heading">
+          <p class="eyebrow">Próximo passo</p>
+          <h2>Se fizer sentido, o aceite pode acontecer agora.</h2>
+        </div>
+        <div class="cta-card">
+          <div>
+            <p>
+              Ao confirmar pelo WhatsApp, a mensagem já sai pronta com o aceite
+              da proposta para <strong data-bind="companyName"></strong>.
+            </p>
+            <p class="cta-preview" data-computed="whatsappMessagePreview"></p>
+          </div>
+          <a
+            class="cta-button"
+            id="whatsappCta"
+            href="#"
+            target="_blank"
+            rel="noreferrer"
+            >Aceitar proposta via WhatsApp</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <script src="proposals.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
