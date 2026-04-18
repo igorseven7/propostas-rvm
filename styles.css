@@ -359,6 +359,12 @@ body::after {
   gap: 20px;
 }
 
+.hero.is-single-column,
+.vision-grid.is-single-column,
+.comparison-grid.is-single-column {
+  grid-template-columns: 1fr;
+}
+
 .vision-grid {
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.85fr);
 }
@@ -840,7 +846,28 @@ body::after {
   color: var(--muted);
 }
 
-.panel-group input,
+.panel-group .panel-checkbox {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.panel-group .panel-checkbox input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #1361ff;
+}
+
+.panel-group .panel-checkbox span {
+  color: var(--text);
+}
+
+.panel-group input:not([type="checkbox"]),
 .panel-group textarea {
   width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -851,7 +878,7 @@ body::after {
   font: inherit;
 }
 
-.panel-group input:focus,
+.panel-group input:not([type="checkbox"]):focus,
 .panel-group textarea:focus {
   outline: 2px solid rgba(17, 85, 255, 0.35);
   outline-offset: 0;

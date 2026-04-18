@@ -8,6 +8,7 @@ Este projeto agora funciona melhor como proposta online por link.
 - O estilo continua em `styles.css`
 - A logica continua em `script.js`
 - Os dados de cada cliente ficam em `proposals.js`
+- Cada proposta pode ligar ou desligar os servicos incluidos
 - A Vercel recebe URLs limpas como `/proposta/cliente-x` via `vercel.json`
 
 ## Onde criar o slug
@@ -32,6 +33,14 @@ window.proposalCatalog = {
     values: {
       implementationFee: 3000,
       monthlyFee: 1000
+    },
+    services: {
+      commercialStrategy: true,
+      landingPage: true,
+      metaCampaigns: true,
+      whatsappAutomation: true,
+      imageCreatives: true,
+      videoCreatives: true
     }
   }
 };
@@ -74,6 +83,7 @@ Abra `proposals.js` e:
 - copie um bloco existente
 - troque o slug
 - troque nome, empresa, datas e valores
+- ajuste os servicos incluidos em `services`
 
 ### 2. Subir para o GitHub
 
@@ -124,3 +134,27 @@ Se quiser evitar links muito faceis de adivinhar, use um slug menos obvio:
 O painel oculto continua funcionando para editar localmente no navegador com `Ctrl/Cmd + Shift + E`.
 
 Mas para a versao oficial enviada ao cliente, o ideal e salvar os dados no `proposals.js` e publicar de novo, porque o painel usa `localStorage` so no seu navegador.
+
+## Servicos por proposta
+
+Os servicos ficam dentro do objeto `services`.
+
+Quando um servico estiver como `false`, ele some da proposta:
+
+- nas entregas
+- no cronograma
+- na ancoragem
+- na comparacao avulsa
+
+Exemplo:
+
+```js
+services: {
+  commercialStrategy: true,
+  landingPage: true,
+  metaCampaigns: true,
+  whatsappAutomation: false,
+  imageCreatives: true,
+  videoCreatives: false
+}
+```

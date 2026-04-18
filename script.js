@@ -22,6 +22,14 @@ const defaultProposalData = {
     revenue: "+R$ 10 milhões gerados",
     adSpend: "+R$ 500 mil investidos",
   },
+  services: {
+    commercialStrategy: true,
+    landingPage: true,
+    metaCampaigns: true,
+    whatsappAutomation: true,
+    imageCreatives: true,
+    videoCreatives: true,
+  },
   anchorPrices: {
     landingPage: 1000,
     metaCampaigns: 3000,
@@ -32,10 +40,17 @@ const defaultProposalData = {
 };
 
 const DEFAULT_SLUG = "modelo";
+const PRICED_SERVICE_TO_ANCHOR_KEY = {
+  landingPage: "landingPage",
+  metaCampaigns: "metaCampaigns",
+  whatsappAutomation: "whatsappAutomation",
+  imageCreatives: "imageCreatives",
+  videoCreatives: "videoCreatives",
+};
 const proposalCatalog = window.proposalCatalog || {};
 const currentSlug = resolveCurrentSlug();
 const baseProposalData = buildBaseProposalData(currentSlug);
-const STORAGE_KEY = `rvm-proposal-data-v3:${currentSlug}`;
+const STORAGE_KEY = `rvm-proposal-data-v4:${currentSlug}`;
 const proposalData = mergeDeep(cloneData(baseProposalData), loadStoredData());
 
 window.proposalData = proposalData;
@@ -107,7 +122,9 @@ function handleFieldChange(event) {
 
   let value = input.value;
 
-  if (input.type === "number") {
+  if (input.type === "checkbox") {
+    value = input.checked;
+  } else if (input.type === "number") {
     value = Number(value || 0);
   }
 
@@ -132,6 +149,7 @@ function renderProposal() {
   renderMoneyBindings();
   renderDateBindings();
   renderComputedBindings();
+  renderServiceVisibility();
   updateWhatsAppCTA();
   document.title = `Proposta Comercial | ${proposalData.companyName} | ${currentSlug}`;
 }
@@ -176,10 +194,11 @@ function renderComputedBindings() {
 function getComputedValue(key) {
   switch (key) {
     case "anchorTotal":
-      return Object.values(proposalData.anchorPrices).reduce(
-        (total, price) => total + Number(price || 0),
-        0,
-      );
+      return getActivePricedServiceKeys().reduce((total, serviceKey) => {
+        const anchorKey = PRICED_SERVICE_TO_ANCHOR_KEY[serviceKey];
+        const price = Number(getByPath(proposalData, `anchorPrices.${anchorKey}`) || 0);
+        return total + price;
+      }, 0);
     case "implementationGap":
       return Math.max(
         0,
@@ -240,8 +259,55 @@ function syncForm() {
   document.querySelectorAll("[data-input-path]").forEach((input) => {
     const path = input.dataset.inputPath;
     const value = getByPath(proposalData, path);
+
+    if (input.type === "checkbox") {
+      input.checked = Boolean(value);
+      return;
+    }
+
     input.value = value ?? "";
   });
+}
+
+function renderServiceVisibility() {
+  document.querySelectorAll("[data-service]").forEach((element) => {
+    element.hidden = !matchesServiceSelection(element);
+  });
+
+  const heroVisual = document.querySelector(".hero-visual");
+  const valueStack = document.querySelector(".value-stack");
+  const deliverablesSection = document.querySelector(".deliverables");
+  const timelineSection = document.querySelector(".timeline");
+  const anchorSection = document.querySelector(".anchor-pricing");
+  const referenceCard = document.querySelector(".reference-card");
+  const highlightCard = document.querySelector(".clarity-highlight");
+  const pricingSummary = document.querySelector(".pricing-summary");
+
+  toggleContainerByVisibleChildren(heroVisual, ".signal-card:not([hidden])");
+  toggleContainerByVisibleChildren(valueStack, "article:not([hidden])");
+  toggleContainerByVisibleChildren(deliverablesSection, ".info-card[data-service]:not([hidden])");
+  toggleContainerByVisibleChildren(timelineSection, ".roadmap-card:not([hidden])");
+  toggleContainerByVisibleChildren(anchorSection, ".price-card:not([hidden])");
+
+  document.querySelectorAll(".timeline-column").forEach((column) => {
+    toggleContainerByVisibleChildren(column, ".roadmap-card:not([hidden])");
+  });
+
+  toggleContainerByVisibleChildren(referenceCard, ".breakdown-row:not([hidden])");
+
+  const hasAnchorReference = getComputedValue("anchorTotal") > 0;
+
+  if (highlightCard) {
+    highlightCard.hidden = !hasAnchorReference;
+  }
+
+  if (pricingSummary) {
+    pricingSummary.hidden = !hasAnchorReference;
+  }
+
+  toggleSingleColumnLayout(".hero", heroVisual?.hidden);
+  toggleSingleColumnLayout(".vision-grid", valueStack?.hidden);
+  toggleSingleColumnLayout(".comparison-grid", referenceCard?.hidden);
 }
 
 function togglePanel(shouldOpen) {
@@ -254,6 +320,49 @@ function togglePanel(shouldOpen) {
     const firstInput = controlPanel.querySelector("input, textarea");
     firstInput?.focus();
   }
+}
+
+function matchesServiceSelection(element) {
+  const services = String(element.dataset.service || "")
+    .split(",")
+    .map((service) => service.trim())
+    .filter(Boolean);
+
+  if (!services.length) {
+    return true;
+  }
+
+  if (element.dataset.serviceMatch === "any") {
+    return services.some(isServiceEnabled);
+  }
+
+  return services.every(isServiceEnabled);
+}
+
+function isServiceEnabled(serviceKey) {
+  return getByPath(proposalData, `services.${serviceKey}`) !== false;
+}
+
+function getActivePricedServiceKeys() {
+  return Object.keys(PRICED_SERVICE_TO_ANCHOR_KEY).filter(isServiceEnabled);
+}
+
+function toggleContainerByVisibleChildren(container, visibleChildrenSelector) {
+  if (!container) {
+    return;
+  }
+
+  container.hidden = !container.querySelector(visibleChildrenSelector);
+}
+
+function toggleSingleColumnLayout(selector, shouldCollapse) {
+  const element = document.querySelector(selector);
+
+  if (!element) {
+    return;
+  }
+
+  element.classList.toggle("is-single-column", Boolean(shouldCollapse));
 }
 
 function persistData() {

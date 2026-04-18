@@ -10,7 +10,12 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles.css" />
+    <script>
+      window.__assetBase = window.location.protocol === "file:" ? "./" : "/";
+      document.write(
+        '<link rel="stylesheet" href="' + window.__assetBase + 'styles.css" />',
+      );
+    </script>
   </head>
   <body>
     <div class="ambient ambient-a" aria-hidden="true"></div>
@@ -33,7 +38,7 @@
       <div class="panel-header">
         <div>
           <p class="panel-eyebrow">Painel Interno</p>
-          <h2>Editar cliente, valores e dados comerciais</h2>
+          <h2>Editar cliente, serviços, valores e dados comerciais</h2>
         </div>
         <button
           class="panel-close"
@@ -76,6 +81,34 @@
               step="1"
               data-input-path="dates.validityDays"
             />
+          </label>
+        </section>
+
+        <section class="panel-group">
+          <h3>Serviços inclusos</h3>
+          <label class="panel-checkbox">
+            <input type="checkbox" data-input-path="services.commercialStrategy" />
+            <span>Estratégia comercial</span>
+          </label>
+          <label class="panel-checkbox">
+            <input type="checkbox" data-input-path="services.landingPage" />
+            <span>Landing page para vendas</span>
+          </label>
+          <label class="panel-checkbox">
+            <input type="checkbox" data-input-path="services.metaCampaigns" />
+            <span>Gerenciamento de campanhas</span>
+          </label>
+          <label class="panel-checkbox">
+            <input type="checkbox" data-input-path="services.whatsappAutomation" />
+            <span>Atendimento automatizado</span>
+          </label>
+          <label class="panel-checkbox">
+            <input type="checkbox" data-input-path="services.imageCreatives" />
+            <span>Criativos em imagem</span>
+          </label>
+          <label class="panel-checkbox">
+            <input type="checkbox" data-input-path="services.videoCreatives" />
+            <span>Criativos em vídeo</span>
           </label>
         </section>
 
@@ -226,9 +259,9 @@
           </div>
 
           <p class="hero-lead">
-            A proposta organiza oferta, landing page, tráfego pago,
-            atendimento e criativos para tirar a operação do papel com mais
-            velocidade, mais clareza comercial e menos ruído na execução.
+            A proposta organiza a oferta, os ativos contratados e a operação
+            comercial para tirar a execução do papel com mais velocidade,
+            mais clareza e menos ruído.
           </p>
         </div>
 
@@ -237,15 +270,23 @@
           <div class="orbit orbit-b"></div>
           <div class="orbit orbit-c"></div>
           <div class="hero-visual-grid">
-            <article class="signal-card signal-right">
+            <article class="signal-card signal-right" data-service="metaCampaigns">
               <span>Ads</span>
               <strong>Campanhas em 3 dias úteis</strong>
             </article>
-            <article class="signal-card signal-left">
+            <article
+              class="signal-card signal-left"
+              data-service="landingPage,imageCreatives"
+              data-service-match="all"
+            >
               <span>LP + IMG</span>
               <strong>Landing e criativos em até 7 dias</strong>
             </article>
-            <article class="signal-card signal-wide">
+            <article
+              class="signal-card signal-wide"
+              data-service="commercialStrategy,landingPage,metaCampaigns,whatsappAutomation"
+              data-service-match="all"
+            >
               <span>Operação integrada</span>
               <strong>Tráfego, página, atendimento e estrutura comercial alinhados</strong>
             </article>
@@ -287,8 +328,8 @@
           <div class="vision-copy">
             <p>
               A assessoria de resultado da Raiz Vendas e Marketing organiza a
-              jornada inteira: captação, posicionamento, página, atendimento,
-              tráfego e acompanhamento comercial.
+              jornada comercial de acordo com o escopo contratado, conectando
+              posicionamento, ativos de conversão e acompanhamento.
             </p>
             <p>
               Em vez de contratar peças soltas e desconectadas, a proposta
@@ -297,15 +338,15 @@
             </p>
           </div>
           <div class="value-stack">
-            <article>
+            <article data-service="commercialStrategy">
               <h3>Oferta mais clara</h3>
               <p>Posicionamento e comunicação para melhorar percepção de valor.</p>
             </article>
-            <article>
+            <article data-service="metaCampaigns">
               <h3>Captação com ritmo</h3>
               <p>Campanhas estruturadas para trazer demanda e começar a validar rápido.</p>
             </article>
-            <article>
+            <article data-service="whatsappAutomation">
               <h3>Atendimento com resposta</h3>
               <p>Agente e fluxo comercial para não perder lead por lentidão operacional.</p>
             </article>
@@ -319,42 +360,42 @@
           <h2>O que entra na implantação da assessoria.</h2>
         </div>
         <div class="card-grid three-columns">
-          <article class="info-card">
+          <article class="info-card" data-service="commercialStrategy">
             <h3>Estratégia comercial</h3>
             <p>
               Ajuste de narrativa, promessa, oferta e estrutura de conversão
               para abrir a operação com mais clareza.
             </p>
           </article>
-          <article class="info-card">
+          <article class="info-card" data-service="landingPage">
             <h3>Landing page para vendas</h3>
             <p>
               Página enxuta e objetiva para apresentar a proposta, reduzir
               objeções e captar com foco em conversão.
             </p>
           </article>
-          <article class="info-card">
+          <article class="info-card" data-service="metaCampaigns">
             <h3>Gerenciamento de campanhas</h3>
             <p>
               Estrutura inicial de tráfego pago para colocar as campanhas no ar
               com direção comercial e leitura inicial.
             </p>
           </article>
-          <article class="info-card">
+          <article class="info-card" data-service="whatsappAutomation">
             <h3>Atendimento automatizado</h3>
             <p>
               Primeira versão do agente e do fluxo comercial para qualificar e
               responder com mais velocidade.
             </p>
           </article>
-          <article class="info-card">
+          <article class="info-card" data-service="imageCreatives">
             <h3>Criativos em imagem</h3>
             <p>
               Pacote inicial de peças para ativação rápida da campanha e
               sustentação da comunicação.
             </p>
           </article>
-          <article class="info-card">
+          <article class="info-card" data-service="videoCreatives">
             <h3>Criativos em video</h3>
             <p>
               Direção de roteiro, gravação e entrega inicial para reforçar
@@ -372,7 +413,7 @@
         <div class="timeline-board">
           <div class="timeline-column">
             <div class="timeline-marker">72h</div>
-            <article class="roadmap-card">
+            <article class="roadmap-card" data-service="imageCreatives">
               <span class="roadmap-icon">IMG</span>
               <h3>Criativos em imagem</h3>
               <p>Pacote inicial pronto para acelerar a ativação.</p>
@@ -381,17 +422,17 @@
 
           <div class="timeline-column">
             <div class="timeline-marker">3 a 7 dias úteis</div>
-            <article class="roadmap-card">
+            <article class="roadmap-card" data-service="metaCampaigns">
               <span class="roadmap-icon">ADS</span>
               <h3>Campanhas no ar</h3>
               <p>Tráfego pago estruturado em até 3 dias úteis.</p>
             </article>
-            <article class="roadmap-card">
+            <article class="roadmap-card" data-service="landingPage">
               <span class="roadmap-icon">LP</span>
               <h3>Landing page</h3>
               <p>Primeira versão entregue em até 7 dias úteis.</p>
             </article>
-            <article class="roadmap-card">
+            <article class="roadmap-card" data-service="videoCreatives">
               <span class="roadmap-icon">VID</span>
               <h3>Vídeo</h3>
               <p>Roteiro, gravação e entrega inicial em até 7 dias.</p>
@@ -400,7 +441,7 @@
 
           <div class="timeline-column">
             <div class="timeline-marker">7 a 15 dias</div>
-            <article class="roadmap-card">
+            <article class="roadmap-card" data-service="whatsappAutomation">
               <span class="roadmap-icon">BOT</span>
               <h3>Agente de atendimento</h3>
               <p>Primeira versão funcional entre 7 e 15 dias.</p>
@@ -420,27 +461,27 @@
           <h2>Quanto essa estrutura custaria se fosse contratada em peças separadas.</h2>
         </div>
         <div class="card-grid anchor-grid">
-          <article class="price-card">
+          <article class="price-card" data-service="landingPage">
             <p class="label">Landing page para vendas</p>
             <strong data-money="anchorPrices.landingPage"></strong>
             <span class="price-note">estrutura inicial da página de conversão</span>
           </article>
-          <article class="price-card">
+          <article class="price-card" data-service="metaCampaigns">
             <p class="label">Gerenciamento de campanhas</p>
             <strong data-money="anchorPrices.metaCampaigns"></strong>
             <span class="price-note">subida, organização e leitura inicial</span>
           </article>
-          <article class="price-card">
+          <article class="price-card" data-service="whatsappAutomation">
             <p class="label">Atendimento comercial</p>
             <strong data-money="anchorPrices.whatsappAutomation"></strong>
             <span class="price-note">estrutura inicial do fluxo automatizado</span>
           </article>
-          <article class="price-card">
+          <article class="price-card" data-service="imageCreatives">
             <p class="label">Criativos em imagem</p>
             <strong data-money="anchorPrices.imageCreatives"></strong>
             <span class="price-note">R$ 30 cada | pacote inicial de 20</span>
           </article>
-          <article class="price-card">
+          <article class="price-card" data-service="videoCreatives">
             <p class="label">Criativos em video</p>
             <strong data-money="anchorPrices.videoCreatives"></strong>
             <span class="price-note">R$ 250 cada | pacote inicial de 10</span>
@@ -463,23 +504,23 @@
               ganho de composição da assessoria.
             </p>
             <div class="breakdown-list">
-              <div class="breakdown-row">
+              <div class="breakdown-row" data-service="landingPage">
                 <span>Landing page</span>
                 <span data-money="anchorPrices.landingPage"></span>
               </div>
-              <div class="breakdown-row">
+              <div class="breakdown-row" data-service="metaCampaigns">
                 <span>Gerenciamento de campanhas</span>
                 <span data-money="anchorPrices.metaCampaigns"></span>
               </div>
-              <div class="breakdown-row">
+              <div class="breakdown-row" data-service="whatsappAutomation">
                 <span>Atendimento comercial</span>
                 <span data-money="anchorPrices.whatsappAutomation"></span>
               </div>
-              <div class="breakdown-row">
+              <div class="breakdown-row" data-service="imageCreatives">
                 <span>Criativos em imagem</span>
                 <span data-money="anchorPrices.imageCreatives"></span>
               </div>
-              <div class="breakdown-row">
+              <div class="breakdown-row" data-service="videoCreatives">
                 <span>Criativos em video</span>
                 <span data-money="anchorPrices.videoCreatives"></span>
               </div>
@@ -524,7 +565,7 @@
             </p>
             <p>
               Manutenção, infraestrutura, otimização, relatórios e suporte para
-              manter a operação ativa e evoluindo com consistência.
+              sustentar os serviços ativos e evoluir a operação com consistência.
             </p>
           </article>
 
@@ -532,9 +573,9 @@
             <article class="mini-card">
               <h3>O que está incluso</h3>
               <ul class="scope-list">
-                <li>Manutenção e infraestrutura do agente de atendimento automático.</li>
-                <li>Otimização e relatório das campanhas de tráfego pago.</li>
-                <li>Infraestrutura da landing page.</li>
+                <li data-service="whatsappAutomation">Manutenção e infraestrutura do agente de atendimento automático.</li>
+                <li data-service="metaCampaigns">Otimização e relatório das campanhas de tráfego pago.</li>
+                <li data-service="landingPage">Infraestrutura da landing page.</li>
                 <li>Suporte completo da operação ativa.</li>
               </ul>
             </article>
@@ -623,7 +664,13 @@
       </section>
     </main>
 
-    <script src="/proposals.js"></script>
-    <script src="/script.js"></script>
+    <script>
+      document.write(
+        '<script src="' + window.__assetBase + 'proposals.js"><\/script>',
+      );
+      document.write(
+        '<script src="' + window.__assetBase + 'script.js"><\/script>',
+      );
+    </script>
   </body>
 </html>
